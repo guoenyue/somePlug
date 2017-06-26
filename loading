@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>loading</title>
+	<style type="text/css">
+		.loaded .loadWrapper{
+			display:none;
+		}
+		.loadWrapper{
+			display:block;
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			margin-left: -100px;
+			margin-top: -100px;
+			width: 200px;
+			height: 200px;
+			text-align: center;
+			vertical-align: middle;
+			}
+		.loading .loadCircle,.loading .loadCircle::after,.loading .loadCircle::before{
+			position:absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			border: 1px solid transparent;
+			border-radius:50%;
+		}
+		.loading .loadCircle{
+			border-left-color:#60f;
+			animation:rotate 3s linear infinite;
+		}
+		.loading .loadCircle::after,.loading .loadCircle::before{
+			content:" ";
+			left: 50%;
+			top: 50%;
+		}
+		.loading .loadCircle::before{
+			width: 140px;
+			height: 140px;
+			margin-left: -70px;
+			margin-top: -70px;
+			border-left-color:#f90;
+			animation:rotate 1.5s linear infinite;
+		}
+		.loading .loadCircle::after{
+			width: 100px;
+			height: 100px;
+			margin-left: -50px;
+			margin-top: -50px;
+			border-left-color:#9a0;
+			animation:rotate 1s linear infinite;
+		}
+		@keyframes rotate{
+			form{
+				transform:rotateZ(0deg);
+			}to{
+				transform:rotateZ(360deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+	var load=(function(){
+			var body=document.body;
+			var domWrapper=document.createElement("div");
+			var dom=document.createElement("div");
+			domWrapper.className="loadWrapper";
+			dom.className="loadCircle";
+			domWrapper.appendChild(dom);
+			body.appendChild(domWrapper);		
+			function init(){
+				body.className=body.className.replace(/\bloaded\b/ig,"loading");	
+				loading();	
+			};
+			function loading(){
+				body.className+=(/\bloading\b/ig.test(body.className))?"":" loading";
+			};
+			function loaded(){
+				body.className=body.className.replace(/\bloading\b/ig,"loaded");
+			};
+			return {
+				init:init,
+				loading:loading,
+				loaded:loaded
+			}
+		})()
+		
+
+		load.init();
+		_load=window.onload||function(){};
+		window.onload=function(){
+			setTimeout(function(){
+			load.loaded();
+			},4000);
+			_load();
+		}
+	</script>
+</body>
+</html>
