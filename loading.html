@@ -65,14 +65,14 @@
 <body>
 	<script type="text/javascript">
 	var load=(function(){
-			var body=document.body;
-			var domWrapper=document.createElement("div");
-			var dom=document.createElement("div");
-			domWrapper.className="loadWrapper";
-			dom.className="loadCircle";
-			domWrapper.appendChild(dom);
-			body.appendChild(domWrapper);		
+			var body=document.body;		
 			function init(){
+				var domWrapper=document.createElement("div");
+				var dom=document.createElement("div");
+				domWrapper.className="loadWrapper";
+				dom.className="loadCircle";
+				domWrapper.appendChild(dom);
+				body.appendChild(domWrapper);
 				body.className=body.className.replace(/\bloaded\b/ig,"loading");	
 				loading();	
 			};
