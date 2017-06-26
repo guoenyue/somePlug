@@ -73,8 +73,8 @@
 				dom.className="loadCircle";
 				domWrapper.appendChild(dom);
 				body.appendChild(domWrapper);
-				body.className+=(/\bloading\b/ig.test(body.className))?"":" loading";
 				loading();	
+				body.className+=(/\bloading\b/ig.test(body.className))?"":" loading";
 			};
 			function loading(){	
 				body.className=body.className.replace(/\bloaded\b/ig,"loading");
