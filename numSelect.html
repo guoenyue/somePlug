@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>numSelect</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		/*数字交互样式*/
+		.btn-num-item{
+			/*width: 115px;*/
+			height: 36px;
+			display: inline-block;
+			box-sizing:border-box;
+			padding: 2px;
+			background-color: #f2f2f2;
+			font-size:0;
+			-webkit-user-select:none ;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+			user-select: none;
+		}
+		.btn-num-item .btn{
+			position: relative;
+			display:inline-block;
+			width: 30px;
+			height: 30px;
+			border: 1px solid #e7e7e7;
+			background-color: #fff;
+			vertical-align:top;
+			cursor:pointer;
+		}
+		.btn-num-item .btn::after{
+			content:"";
+			position: absolute;
+			top:50%;
+			left: 50%;
+			margin-left: -2.5px;
+			margin-top: -2.5px;
+			width: 5px;
+			height: 5px;
+			border-left:1px solid #2991c6;
+			border-bottom:1px solid #2991c6;
+		}
+		.btn-des::after{
+			transform:rotateZ(45deg);
+		}
+		.btn-add::after{
+			transform:rotateZ(-135deg);
+		}
+		.num-input{
+			width: 40px;
+			height: 32px;
+			border: none;
+			font-size:14px;
+			/*display:inline-block;*/
+			display: none;
+			-webkit-user-select:auto;
+			-moz-user-select: auto;
+			-ms-user-select: auto;
+			-o-user-select: auto;
+			user-select: auto;
+		}
+		.num-cont{
+			width: 36px;
+		    height: 32px;
+		    display: inline-block;
+		    font-size:14px;
+		    line-height: 32px;
+		    text-align: center;
+			-webkit-user-select:auto ;
+			-moz-user-select: auto;
+			-ms-user-select: auto;
+			-o-user-select: auto;
+			user-select: auto;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		function numSelect(options){
+			options=options?options:{};
+			var defaultNum=options.num||0;
+			var that=this;
+			this.num=defaultNum;
+			this.desBtn=null;
+			this.addBtn=null;
+			this.panal=options.cont&&document.getElementById(options.cont)||document.body;
+			this.wrapper=null;
+			this.numcont=null;
+			this.numinput=null;
+			this.callback=options.callback||function(){};
+			this.init();
+		}
+		numSelect.prototype.init=function(){
+			var that=this;
+			var frag=document.createDocumentFragment();
+			var desBtn=document.createElement("span");
+			this.desBtn=desBtn;
+			this.desBtn.className="btn btn-des";
+			this.desBtn.onclick=function(e){
+				that.num--;
+				that.num=that.num<0?0:that.num;
+				that.setNum();
+				that.callback.apply(that,arguments);
+			};
+			this.addBtn=document.createElement("span");
+			this.addBtn.className="btn btn-add";
+			this.addBtn.onclick=function(e){
+				that.num++;
+				that.setNum();
+				that.callback(that.num);
+			};
+			this.numcont=document.createElement("span");
+			this.numcont.className="num-cont";
+			this.numcont.innerHTML=this.num;
+			this.numcont.ondblclick=function(){
+				this.style.display="none";
+				that.numinput.value=parseInt(this.innerHTML);
+				that.numinput.style.display="inline-block";
+			}
+			this.setNum=function(){
+				this.numcont.innerHTML=this.num;
+			}
+			this.numinput=document.createElement("input");
+			this.numinput.type="number";
+			this.numinput.className="num-input";
+			this.numinput.ondblclick=function(){
+				this.style.display="none";
+				that.num=parseInt(this.value);
+				that.numcont.innerHTML=this.value;
+				that.numcont.style.display="inline-block";
+				that.callback(that.num);	
+			}
+			this.wrapper=document.createElement("div");
+			this.wrapper.className="btn-num-item";
+			this.wrapper.appendChild(this.desBtn);
+			this.wrapper.appendChild(this.numcont);
+			this.wrapper.appendChild(this.numinput);
+			this.wrapper.appendChild(this.addBtn);
+			frag.appendChild(this.wrapper);
+			this.panal.appendChild(frag);
+			frag=null;
+			this.getNum=function(){
+				return this.num;
+			}
+		}
+
+
+		new numSelect({cont:"numWrap",num:10});
+		new numSelect({cont:"numWrap"});
+		new numSelect({cont:"numWrap",callback:function(num){console.log(num);}});
+		new numSelect();
+	</script>
+</body>
+</html>
