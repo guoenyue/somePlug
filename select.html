@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选择框</title>
+	<style>
+		*{
+			margin:0;
+			padding: 0;			
+		}
+		body{
+			padding:300px;
+		}
+		.box{
+			position: relative;
+			width: 180px;
+		}
+		.datebox{
+			width: 180px;/*180*/
+			height: 40px;/*40*/
+			border-radius:4px;
+			position: relative;
+			box-sizing:border-box;
+			padding:10px 20px;
+			line-height:20px;
+			font-size:18px;
+			font-family:"微软雅黑",Microsoft YaHei;
+			background-color: #1EB98E;
+			color:#ddd;
+			cursor:pointer;
+		}
+		.box:hover .datebox,.box.act .datebox{
+			color:#fff;
+		}
+		.datebox::after{
+			content:"";
+			position: absolute;
+			display:block;
+			border:8px solid transparent;
+			border-top-color:#0A8F6B;
+			top:16px;
+			right:24px;
+		}
+		.box:hover .datebox::after,.box.act .datebox::after{
+			border-top-color:#fff;
+		}
+		.wrapper{
+			position: absolute;
+			width:180px;
+			top:60px;
+			left: 0;
+			border-radius:6px;
+			background-color: #1EB98E;
+			box-sizing:border-box;
+			display: none;
+			z-index: 9;
+		}
+		.box.act .wrapper{
+			display: block;
+		}
+		.wrapper::after{
+			content:" ";
+			display:block;
+			position: absolute;
+			right: 20px;
+			top: -20px;
+			border:10px solid transparent;
+			border-bottom-color:#1EB98E;
+		}
+		.data-container{
+			width: 100%;
+			border-radius:4px;
+			padding:10px 0;
+		}
+		.data-select-item{
+			height:40px;
+			width: 100%;
+			line-height: 40px;
+			color:#fff;
+			font-size:18px;
+			font-family:"微软雅黑",Microsoft YaHei;
+			text-indent:40px;
+			position: relative;
+			cursor: pointer;
+			transition:all 1s;
+		}
+		.data-select-item:hover{
+			background-color: #1EA583;
+		}
+	</style>
+</head>
+<body>
+	<div class="box" id="dateSel">
+		<div class="datebox">选择日期</div>
+		<div class="wrapper">
+			<div class="data-container">
+				<div class="data-select-item">2017-06-28</div>
+				<div class="data-select-item">2017-06-29</div>
+				<div class="data-select-item">2017-06-30</div>
+				<div class="data-select-item">2017-07-01</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		g("dateSel").addEventListener("click",function(e){
+			e=e||window.event;
+			var oTar=e.target||e.srcElement;
+			if(oTar.className.indexOf("data-select-item")>-1){
+				removeClass(this,"act");
+				this.children[0].innerHTML=oTar.innerHTML;
+			}else{
+				addClass(this,"act");
+			}
+		},false);
+
+
+
+
+
+
+		function g(id){
+			return document.getElementById(id);
+		};
+		function addClass(obj,className){
+			obj.className+=(hasClass(obj,className)?'':(" "+className));
+			return obj;
+		};
+		function removeClass(obj,className){
+			var reg="\\b"+className+"\\b";
+			obj.className=obj.className.replace(new RegExp(reg,"ig"),'').trim();
+			return obj;
+		};
+		function hasClass(obj,className){
+			var reg="\\b"+className+"\\b";
+			obj.className=obj.className.trim();
+			return new RegExp(reg,"ig").test(obj.className);
+		}
+	</script>
+</body>
+</html>
