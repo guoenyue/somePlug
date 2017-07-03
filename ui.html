@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ui控件</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		body{padding:200px;}
+		.row{width: 100%;background-color:rgba(203,203,203,0.4);box-sizing:border-box;margin-bottom: 10px;}
+		.panal{position: relative;}
+		.btn-group{
+			margin-top: 20px;
+			padding: 10px;
+		}
+		.btn-group .btn-item{
+			width: 140px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			font-size:16px;
+			color:#fff;
+			cursor: pointer;
+		}
+		.btn-group .btn-item~.btn-item{
+			margin-top: 10px;
+		}
+		.btn-group-corner .btn-item{
+			border-radius:2px;
+		}
+		.btn-group-radius .btn-item{
+			border-radius:20px;
+		}
+		.btn-default{
+			background-color: #1e8bc3;
+		}
+		.btn-hover{
+			background-color: #239fde;
+		}
+		.btn-press{
+			background-color: #1875a5;
+		}
+		.btn-key-item{
+			position: relative;
+			width:70px;
+			height: 30px; 
+			background-color:#d35400;
+			transition:all 1s;
+			border-radius:15px;
+			margin-bottom: 20px;
+			box-sizing:border-box;
+			padding:0 15px;
+			cursor: pointer;
+		}
+		.btn-key-item::before{
+			content:"关";
+			display:inline-block;
+			font-size:14px;
+			line-height: 30px;
+			color:#fff;	
+		}
+		.btn-key-item::after{
+			content:"开";
+			display:none;
+			font-size:14px;
+			line-height: 30px;	
+			color:#fff;
+		}
+		.btn-key-item .btn-circle{
+			position: absolute;
+			width: 40px;
+			height: 40px;
+			border-radius:50%;
+			background-color: #fff;
+			top: -5px;
+			left: 35px;
+			transition:all 0.5s;
+		}
+		.btn-key-item-over .btn-circle{
+			width: 30px;
+			height: 30px;
+			top:0px;
+			left:40px;
+		}
+		.btn-key-item-open{
+			text-align:right;
+			background-color: #26c281;
+		}
+		.btn-key-item-open::before{
+			display:none;
+		}
+		.btn-key-item-open::after{
+			display:inline-block;
+		}
+		.btn-key-item-open .btn-circle{
+			left:-5px;
+		}
+		.btn-key-item-over.btn-key-item-open .btn-circle{
+			left:0px;
+		}
+		/*数字交互样式*/
+		.btn-num-item{
+			/*width: 115px;*/
+			height: 36px;
+			display: inline-block;
+			box-sizing:border-box;
+			padding: 2px;
+			background-color: #f2f2f2;
+			font-size:0;
+			-webkit-user-select:none ;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+			user-select: none;
+		}
+		.btn-num-item .btn{
+			position: relative;
+			display:inline-block;
+			width: 30px;
+			height: 30px;
+			border: 1px solid #e7e7e7;
+			background-color: #fff;
+			vertical-align:top;
+			cursor:pointer;
+		}
+		.btn-num-item .btn::after{
+			content:"";
+			position: absolute;
+			top:50%;
+			left: 50%;
+			margin-left: -2.5px;
+			margin-top: -2.5px;
+			width: 5px;
+			height: 5px;
+			border-left:1px solid #2991c6;
+			border-bottom:1px solid #2991c6;
+		}
+		.btn-des::after{
+			transform:rotateZ(45deg);
+		}
+		.btn-add::after{
+			transform:rotateZ(-135deg);
+		}
+		.num-input{
+			width: 40px;
+			height: 32px;
+			border: none;
+			font-size:14px;
+			/*display:inline-block;*/
+			display: none;
+			-webkit-user-select:auto;
+			-moz-user-select: auto;
+			-ms-user-select: auto;
+			-o-user-select: auto;
+			user-select: auto;
+		}
+		.num-cont{
+			width: 36px;
+		    height: 32px;
+		    display: inline-block;
+		    font-size:14px;
+		    line-height: 32px;
+		    text-align: center;
+			-webkit-user-select:auto ;
+			-moz-user-select: auto;
+			-ms-user-select: auto;
+			-o-user-select: auto;
+			user-select: auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="row">
+			<div class="panal">
+				<h2 class="title">直角按钮组</h2>
+				<div class="btn-group btn-group-corner">
+					<div class="btn-item btn-default">BUTTON</div>
+					<div class="btn-item btn-hover">BUTTON</div>
+					<div class="btn-item btn-press">BUTTON</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panal">
+				<h2 class="title">圆角按钮组</h2>
+				<div class="btn-group btn-group-radius">
+					<div class="btn-item btn-default">BUTTON</div>
+					<div class="btn-item btn-hover">BUTTON</div>
+					<div class="btn-item btn-press">BUTTON</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panal">
+				<h2 class="title">开关按钮组</h2>
+				<div class="btn-group btn-group-key" id="btnkey">
+					<div class="btn-key-item btn-key-item-open"><span class="btn-circle"></span></div>
+					<div class="btn-key-item btn-key-item-over"><span class="btn-circle"></span></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panal">
+				<h2 class="title">数字交互组</h2>
+				<div class="btn-group btn-group-num" id="numWrap">
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		g("btnkey").addEventListener("click",function(e){
+			e=e||window.event;
+			var oTar=e.target||e.srcElement;
+			if(hasClass(oTar,"btn-key-item")||hasClass(oTar.parentNode,"btn-key-item")){
+				oTar=hasClass(oTar.parentNode,"btn-key-item")?oTar.parentNode:oTar;
+				toggleClass(oTar,"btn-key-item-open");
+			}
+		},false);
+
+
+		function numSelect(options){
+			options=options?options:{};
+			var defaultNum=options.num||0;
+			var that=this;
+			this.num=defaultNum;
+			this.desBtn=null;
+			this.addBtn=null;
+			this.panal=options.cont&&document.getElementById(options.cont)||document.body;
+			this.wrapper=null;
+			this.numcont=null;
+			this.numinput=null;
+			this.callback=options.callback||function(){};
+			this.init();
+		}
+		numSelect.prototype.init=function(){
+			var that=this;
+			var frag=document.createDocumentFragment();
+			var desBtn=document.createElement("span");
+			this.desBtn=desBtn;
+			this.desBtn.className="btn btn-des";
+			this.desBtn.onclick=function(e){
+				that.num--;
+				that.num=that.num<0?0:that.num;
+				that.setNum();
+				that.callback.apply(that,arguments);
+			};
+			this.addBtn=document.createElement("span");
+			this.addBtn.className="btn btn-add";
+			this.addBtn.onclick=function(e){
+				that.num++;
+				that.setNum();
+				that.callback(that.num);
+			};
+			this.numcont=document.createElement("span");
+			this.numcont.className="num-cont";
+			this.numcont.innerHTML=this.num;
+			this.numcont.ondblclick=function(){
+				this.style.display="none";
+				that.numinput.value=parseInt(this.innerHTML);
+				that.numinput.style.display="inline-block";
+			}
+			this.setNum=function(){
+				this.numcont.innerHTML=this.num;
+			}
+			this.numinput=document.createElement("input");
+			this.numinput.type="number";
+			this.numinput.className="num-input";
+			this.numinput.ondblclick=function(){
+				this.style.display="none";
+				that.num=parseInt(this.value);
+				that.numcont.innerHTML=this.value;
+				that.numcont.style.display="inline-block";
+				that.callback(that.num);	
+			}
+			this.wrapper=document.createElement("div");
+			this.wrapper.className="btn-num-item";
+			this.wrapper.appendChild(this.desBtn);
+			this.wrapper.appendChild(this.numcont);
+			this.wrapper.appendChild(this.numinput);
+			this.wrapper.appendChild(this.addBtn);
+			frag.appendChild(this.wrapper);
+			this.panal.appendChild(frag);
+			frag=null;
+			this.getNum=function(){
+				return this.num;
+			}
+		}
+
+
+		new numSelect({cont:"numWrap"});
+		new numSelect({cont:"numWrap"});
+		new numSelect({cont:"numWrap",callback:function(num){console.log(num);}});
+		new numSelect();
+
+
+
+
+
+
+
+
+
+
+
+
+		function g(id){
+			return document.getElementById(id);
+		};
+		function addClass(obj,className){
+			obj.className+=(hasClass(obj,className)?'':(" "+className));
+			return obj;
+		};
+		function removeClass(obj,className){
+			var reg="\\b"+className+"\\b";
+			obj.className=obj.className.replace(new RegExp(reg,"ig"),'').trim();
+			return obj;
+		};
+		function hasClass(obj,className){
+			var reg="\\b"+className+"\\b";
+			obj.className=obj.className.trim();
+			return new RegExp(reg,"ig").test(obj.className);
+		};
+		function toggleClass(obj,className){
+			return hasClass(obj,className)?removeClass(obj,className):addClass(obj,className);
+		}
+	</script>
+</body>
+</html>
