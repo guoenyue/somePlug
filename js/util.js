@@ -131,6 +131,7 @@ function ajax(options){
 */
 
 function Json2HTML(json){
+	json=json||{singleTag:false};
 	var domStr='';
 	var subChildStr='';
 	var _data='';
@@ -151,7 +152,7 @@ function Json2HTML(json){
 		subChildStr=json.children;
 	}
 
-	domStr+='<'+json.tagName+(json.className?(' class="'+json.className+'"'):'')+(json.id?(' id="'+json.id+'"'):'')+_data+'>'+subChildStr+'</'+json.tagName+'>';
+	domStr+='<'+json.tagName+(json.className?(' class="'+json.className+'"'):'')+(json.id?(' id="'+json.id+'"'):'')+_data+(json.singleTag?'/>':('>'+subChildStr+'</'+json.tagName+'>'));
 	return domStr;
 }
 
