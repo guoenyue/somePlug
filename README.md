@@ -9,6 +9,7 @@
 	1.需要说明就是`class`、`id`等属性的设置也可以通过自定义属性设置方式设置
 	~~~  2.该函数只能操作双标记标签，单标记标签请选择直接在children中写字符串的方式添加  ~~~
 	3.已经将第二条修复
+	4.新增json格式添加属性值
 
 ```javascript
 
@@ -50,6 +51,10 @@
 				tagName:"input",
 				data:[{dataKey:"type",dataVal:"text"}],
 				singleTag:true
+			},
+			{
+				tagName:"span",
+				data:{name:"dd",id:"sss",style:"color:#f00"}
 			}
 		]
 	}
@@ -67,6 +72,7 @@
 		</div>
 		<span class='span' id='span'></span>
 		<input type="text">
+		<span name="dd" id="sss" style="color:#f00"></span>
 	</body>
 
 ```
