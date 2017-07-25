@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script type="text/javascript" src="./js/util.js"></script>
+    <script type="text/javascript" src="./util.js"></script>
 </head>
 
 <body>
@@ -23,7 +23,8 @@
         
     </div>
     <script type="text/javascript">
-        siblings(document.getElementsByTagName("p")[0],"SPAN").forEach((item,i)=>{item.style.color="#f00";});
+        siblings(document.getElementsByTagName("p")[0],"i").forEach((item,i)=>{item.style.color="#f00";});
+
         console.log(myRandom(9,4));
 
         
@@ -52,8 +53,23 @@
                             tagName:'a',
                             data:[{dataKey:"href",dataVal:"http://www.baidu.com"},{dataKey:"class",dataVal:"aaa"}],
                             children:"www.baidu.com"
+                        },
+                        {
+                            tagName:'input',
+                            data:[{dataKey:"type",dataVal:"text"}],
+                            singleTag:true
+                        },
+                        {
+                            tagName:'span',
+                            data:{id:'myTxt',name:"test",style:"color:#f00;border:1px solid #333;"},
+                            children:"我是一个新的文本标签，我的属性是通过json格式传进来的额。"
                         }
                     ]
+                },
+                {
+                    tagName:'img',
+                    data:{src:"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"},
+                    singleTag:true
                 }
             ]
         });
