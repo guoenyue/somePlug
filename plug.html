@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./js/util.js"></script>
+</head>
+
+<body>
+    <button id="btn">按钮</button>
+    <div id="box">
+        <p id="txt">73928</p>
+        <span>gdsh</span>
+        <span>fsdf</span>
+        <span>qwaq</span>
+        <span>fdsgdgdf</span>
+        <i>我是斜体标签</i>
+    </div>
+    <div id="wrap">
+        
+    </div>
+    <script type="text/javascript">
+        siblings(document.getElementsByTagName("p")[0],"SPAN").forEach((item,i)=>{item.style.color="#f00";});
+        console.log(myRandom(9,4));
+
+        
+
+        var json={a:1,b:2,c:3,d:4};
+        console.log(Json2Arr(json,"name","num"));
+
+
+        var str=Json2HTML({
+            tagName:'div',
+            className:"content",
+            id:"content",
+            children:[
+                {
+                    tagName:'p',
+                    className:'txt',
+                    data:[{dataKey:"data-ss",dataVal:"123"},{dataKey:"data-dd",dataVal:"444"}],
+                    children:"我是一个小小的石头"
+                },
+                {
+                    tagName:'p',
+                    id:'big',
+                    className:'txt',
+                    children:[
+                        {
+                            tagName:'a',
+                            data:[{dataKey:"href",dataVal:"http://www.baidu.com"},{dataKey:"class",dataVal:"aaa"}],
+                            children:"www.baidu.com"
+                        }
+                    ]
+                }
+            ]
+        });
+        console.log(str);
+        g("wrap").innerHTML=str;
+        siblings(g("big"),"p").forEach((item,i)=>{item.style.color="#f00";});
+    </script>
+</body>
+</html>
