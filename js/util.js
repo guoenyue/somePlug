@@ -91,6 +91,9 @@ function ajax(options){
 	xhr.send((options.type&&options.type.toLowerCase()=="post")?options.data:undefined);
 }
 
+function isJSON(obj){
+	return typeof(obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
+}
 
 /*
 	json:{
@@ -141,6 +144,10 @@ function Json2HTML(json){
 		for(var i=0,cur;cur=json.data[i++];){
 			//console.log(cur);
 			_data+=' '+cur["dataKey"]+'="'+cur["dataVal"]+'"';
+		}
+	}else if(isJSON(json.data)){
+		for(var k in json.data){
+			_data+=' '+k+'="'+json.data[k]+'"';
 		}
 	}
 	//遍历回调添加子元素
