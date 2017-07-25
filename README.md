@@ -1,10 +1,10 @@
 # 一些自己写的开发小工具
 ---
-	暂时只先写那个util工具里边的简单介绍吧，其实总共就1个需要介绍的目前为止
+>	暂时只先写那个util工具里边的简单介绍吧，其实总共就1个需要介绍的目前为止
 
 ##  Json2HTML
 
-	自己看吧，前端都懂得:)
+>	自己看吧，前端都懂得:)
 	
 	1.需要说明就是class、id等属性的设置也可以通过自定义属性设置方式设置
 	2.该函数只能操作双标记标签，单标记标签请选择直接在children中写字符串的方式添加
@@ -45,6 +45,11 @@
 				tagName:"span",
 				className:"span",
 				id:"span"
+			},
+			{
+				tagName:"input",
+				data:[{dataKey:"type",dataVal:"text"}],
+				singleTag:true
 			}
 		]
 	}
@@ -61,7 +66,9 @@
 			<a class="aaa" href="http://www.baidu.com">www.baidu.com</a>
 		</div>
 		<span class='span' id='span'></span>
+		<input type="text">
 	</body>
 
 ```
+>  增加单标记标签的识别标记，通过singleTag,当该属性为true时，则该元素为单标记元素，
 
