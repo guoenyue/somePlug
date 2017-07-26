@@ -50,6 +50,19 @@ function siblings(obj,nodeName){
 	return ret;
 };
 
+
+function each(obj,cb){
+	if(obj instanceof Array){
+		for(var i=0,cur;cur=obj[i++];){
+			cb.call(null,cur,i-1,obj);
+		}
+	}else if(isJSON(obj)){
+		for(var k in obj){
+			cb.call(null,k,obj[k],obj);
+		}
+	}
+}
+
 function myRandom(min,max){
 	return Math.round(Math.random()*Math.abs(max-min))+(max>min?min:max);
 };
