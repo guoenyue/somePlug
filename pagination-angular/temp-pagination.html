@@ -1,0 +1,10 @@
+<div class="paginationWrap">
+    <ul>
+        <li class="page-btn" ng-click="!isFirst&&goToPage(0)" ng-disabled="isFirst" ng-class="isFirst?'disable':''">首页</li>
+        <li class="page-btn" ng-click="!isFirst&&goPrev()" ng-disabled="isFirst" ng-class="isFirst?'disable':''">上一页</li>
+        <li class="page-btn" ng-repeat="pageNum in pages" ng-click="(currentPage!=pageNum)&&goToPage(pageNum)" ng-class="currentPage==pageNum?'act disable':''" ng-disabled="currentPage==pageNum">{{pageNum+1}}</li>
+        <li class="page-btn" ng-click="!isEnd&&goNext()" ng-disabled="isEnd" ng-class="isEnd?'disable':''">下一页</li>
+        <li class="page-btn" ng-click="!isEnd&&goToPage(countPages-1)" ng-disabled="isEnd" ng-class="isEnd?'disable':''">末页</li>
+        <li class="page-desc">总共{{countPages}}页，当前第{{currentPage+1}}页</li>
+    </ul>
+</div>

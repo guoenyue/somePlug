@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>angularjs分页组件</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		/*分页组件*/
+		.paginationWrap .page-btn, .paginationWrap .page-desc {
+		  display: inline-block;
+		  padding: 4px 8px;
+		  list-style: none;
+		  border: 1px solid #1a8acc;
+		  cursor: pointer;
+		}
+		.paginationWrap .page-btn.act, .paginationWrap .act.page-desc {
+		  border: 1px solid #34b01e;
+		}
+		.paginationWrap .page-btn.disable, .paginationWrap .disable.page-desc {
+		  cursor: not-allowed;
+		}
+		.paginationWrap .page-btn ~ .page-btn, .paginationWrap .page-desc ~ .page-btn, .paginationWrap .page-btn ~ .page-desc, .paginationWrap .page-desc ~ .page-desc {
+		  margin-left: 10px;
+		}
+		.paginationWrap .page-desc {
+		  cursor: auto;
+		}
+	</style>
+	<script type="text/javascript" src="../asset/js/angular.min.js"></script>
+</head>
+<body>
+	<div ng-controller="paginationCtrl">
+		<pagination pager="myPage" ng-if="myPage"></pagination>
+	</div>
+	<script type="text/javascript">
+		var app=angular.module("myApp",[]);
+	</script>
+	<script type="text/javascript" src="./controller.js"></script>
+	<script type="text/javascript" src="./directive.js"></script>
+</body>
+</html>
