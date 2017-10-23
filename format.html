@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>format js</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+	function format(txt,json){
+		var body=json;
+		var sourcePrefix = "body.";
+		// var templateString = JSON.stringify(t);
+		var templateString =txt;
+		var hasError = false;
+		var wrongPara;
+		templateString = templateString.replace(/\$([\w\.\[\]]{1,})\$/g, function(s){
+		                        try{                          
+		                            return eval(sourcePrefix + s.slice(1,-1));
+		                        }catch(err){
+		                            hasError = true;
+		                            wrongPara = s;
+		                            return s;
+		                        }                        
+		                    }
+		                );
+		return templateString;
+
+	}
+
+	console.log(format("像我这样$a$的人,总是习惯了$b.c$,怎么$d[0]$多年到头来，忽然也晃了神。",{a:"孤单",b:{c:"单身"},d:[20,30]}));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
