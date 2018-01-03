@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>change date to local</title>
+</head>
+
+<body>
+    <div class="toLocalTime">
+        2018-1-3T00:00:00.00
+    </div>
+    <div class="toLocalTime">
+        2018-1-5T09:00:00.00
+    </div>
+    <div class="toLocalTime">
+        2018-1-7T14:00:00.00
+    </div>
+    <div class="toLocalTime">
+        2018-1-9T18:00:00.00
+    </div>
+    <div class="toLocalTime">
+        2018-1-13T20:00:00.00
+    </div>
+    <div class="toLocalTime">
+        2018-1-21T23:00:00.00
+    </div>
+    <script type="text/javascript">
+        var TIME_CTRL = function() {};
+        var timeobj = {
+            splitVal: ":",
+            timezoneOffSet: (function() {
+                return new Date().getTimezoneOffset()
+            })(),
+            timezone: function() {
+                return this.timezoneOffSet * 60 * 1000;
+            },
+            changeTime: function(_time) {
+                //专注解析后台返回格式为：2017-11-27T03:34:36.42这种时间格式
+                var that = this;
+                var splitVal = _time.indexOf("T") > -1 && "T" || " ";
+                var reg = new RegExp("[^(\\d+|\\.|" + splitVal + ")]", "g");
+                _time = _time.replace(reg, function() {
+                    return that.splitVal;
+                });
+                var arrTime = _time.split(splitVal);
+                arrTime = arrTime.map(function(item, idx) {
+                    return item.split(that.splitVal).map(function(_item, i) {
+                        return parseFloat(_item);
+                    });
+                });
+                return arrTime[0].concat(arrTime[1]);
+            },
+            parseTime: function(_time, tag) {
+                //此处的tag为后台格式，若为标准时间戳，此处为false
+                var timestamp;
+                if (tag) {
+                    var dateArr = this.changeTime(_time);
+                    timestamp = new Date(dateArr[0], dateArr[1] - 1, dateArr[2], dateArr[3], dateArr[4], dateArr[5]).getTime();
+                } else {
+                    timestamp = new Date(_time).getTime();
+                }
+                var _date = new Date(timestamp);
+                var fullYear = _date.getFullYear();
+                var month = this.fixZero(_date.getMonth() + 1);
+                var date = this.fixZero(_date.getDate());
+                var hour = this.fixZero(_date.getHours());
+                var minute = this.fixZero(_date.getMinutes());
+                var second = this.fixZero(_date.getSeconds());
+                var millisecond = this.fixZero(_date.getMilliseconds());
+                return {
+                    year: fullYear,
+                    month: month,
+                    day: date,
+                    hour: hour,
+                    minute: minute,
+                    second: second,
+                    time: timestamp,
+                    date: fullYear + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second,
+                    oldTime: _time
+                };
+            },
+            fixZero: function(num) {
+                return num < 10 && ("0" + num) || num;
+            },
+            getDate: function(date) {
+                var pad = this.fixZero;
+                return (date.getUTCFullYear()) + '-' +
+                    pad(date.getUTCMonth() + 1) + '-' +
+                    pad(date.getUTCDate()) + 'T' +
+                    pad(date.getUTCHours() + 12) + ':' +
+                    pad(date.getUTCMinutes()) + ':' +
+                    pad(date.getUTCSeconds()) + '.' +
+                    pad(date.getUTCMilliseconds()) + 'Z';
+            },
+            getLocalTime: function(timestape, isTimeStamp) {
+                isTimeStamp = isTimeStamp || false;
+                return this.parseTime(this.parseTime(timestape, isTimeStamp).time - this.timezone(), false);
+            }
+        };
+        TIME_CTRL.prototype = timeobj;
+        TIME_CTRL.prototype.constructor = TIME_CTRL;
+
+        function trimStr(str) {
+            return str.replace(/(^\s+|\s+$)/ig, "");
+        }
+    </script>
+
+    <script>
+        var timeparse = new TIME_CTRL();
+        // var timeCont = document.querySelectorAll(".toLocalTime");
+        // [].forEach.call(timeCont, (time) => {
+        //     var tmpStr = time.innerHTML;
+        //     time.innerHTML = '';
+        //     此处使用setTimeout加入到异步线程中，防止阻塞渲染
+        //     setTimeout(() => {
+        //         time.innerHTML = timeparse.getLocalTime(tmpStr, true);
+        //     }, 0);
+        // });
+        var tmp = document.createElement("div");
+        tmp.className = "toLocalTime";
+        tmp.innerHTML = "2018-1-21T23:00:00.00";
+        tmp.style.backgroundColor = "#f00";
+        console.dir(tmp);
+        tmp.onload = function(e) {
+            parseTime(this);
+            console.log(6, "tmp load");
+        }
+        var timeCont = document.getElementsByClassName("toLocalTime");
+        document.body.onload = function(e) {
+            console.log(1, "body.onload");
+        };
+        window.load = function() {
+            console.log(5, "win load");
+        }
+        window.onresize = function(e) {
+            console.log(2, "resize");
+        };
+        window.onscroll = function(e) {
+            console.log(3, "scroll");
+        };
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.log(4, "DOM Load");
+        });
+        setTimeout(() => {
+            console.log(timeCont.length);
+            document.body.appendChild(tmp);
+            console.log(timeCont.length);
+            parseTime(tmp);
+        }, 3000);
+        [].forEach.call(timeCont, function(item, index) {
+            item && parseTime(item);
+        });
+
+
+        function parseTime(oTar) {
+            var str = oTar.innerHTML;
+            var tmpStr = trimStr(oTar.innerHTML);
+            oTar.innerHTML = '';
+            var timer = setTimeout(function() {
+                oTar.innerHTML = timeparse.getLocalTime(tmpStr, true).date;
+                clearTimeout(timer);
+                timer = tmpStr = str = null;
+            }, 0);
+        }
+    </script>
+</body>
+
+</html>
