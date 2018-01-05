@@ -17,7 +17,9 @@
 
     </div>
     <script>
-        // 约定：
+        // 注意：字符串拼接使用了es6,如果在正式环境使用请先转换成常规字符串拼接
+
+        // 约定：(可以根据自己的数据结构去修改遍历方法)
         // data结构为 {
         //     name:"string",
         //     count:number,
@@ -84,9 +86,23 @@
         }
 
 
-        function mySelect() {
-            g("select-box").appendChild(renderSelect(tmp));
-            g("select-box").onclick = function(e) {
+        //使用
+        mySelect({
+            container: g("select-box"),
+            changeCallback: function(e) {
+                console.log(this.value);
+            }
+        });
+
+
+
+        function mySelect(configs) {
+            var _config = configs || {};
+            var container = _config.container;
+            if (!container) return false;
+            var cb = _config.changeCallback || function() {};
+            container.appendChild(renderSelect(tmp));
+            container.onclick = function(e) {
                 var ev = e || window.event;
                 var oTar = ev.target || ev.srcElement;
                 if (oTar.nodeName.toLowerCase() == "select") {
@@ -99,12 +115,12 @@
                         while (next.nextElementSibling) {
                             oPar.removeChild(next.nextElementSibling);
                         }
-                        renderSelect(nextSlectObj) && (tmp = document.createDocumentFragment(), tmp.appendChild(renderSelect(nextSlectObj)), g("select-box").appendChild(tmp), tmp = null);
+                        renderSelect(nextSlectObj) && (tmp = document.createDocumentFragment(), tmp.appendChild(renderSelect(nextSlectObj)), container.appendChild(tmp), tmp = null);
+                        typeof cb == "function" && cb.call(this, this);
                     }
                 }
             }
         }
-        mySelect();
 
         function renderSelect(data) {
             var selectStr = '';
@@ -113,7 +129,7 @@
             wrapper.className = "pa-form-control-wrapper pa-form-control-wrapper-select";
             selectStr += `
                 <label>
-                    <select class="pa-form-control pa-form-control-select">
+                    <select class="pa-form-control pa-form-control-select" name='select${data.count}'>
                         ${renderOption(data.options)}
                     </select>
                     <div class="after-btn icon-toggle pa-btn"></div>
