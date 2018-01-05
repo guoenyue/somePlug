@@ -1,0 +1,39 @@
+html,body,div,p,h1,h2,h3,h4,h5,h6,ul,li,a,input,select,button{
+	margin:0;
+	padding:0;
+	border:none;
+}
+html,body{
+	font-size:14px;
+}
+ul,li{
+	list-style-type:none;
+}
+a{
+	text-decoration:none;
+	outline:none;
+}
+a:hover,a:link,a:active,a:focus{
+	color:#006bff;
+	outline:none;
+}
+a.pa-txt-link.pa-disabled,a:not(".pa-btn"){
+	color:#8A8E95;
+	cursor:not-allowed;
+	text-decoration:none;
+}
+a.pa-txt-link:hover{
+	text-decoration:underline;
+}
+
+img[src='']{
+	display:none;
+}
+input,select,button,input:focus,select:focus,button:focus{
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	appearance:none;
+    background-color: transparent;
+    outline: none;
+    border: none;
+}

@@ -1,0 +1,60 @@
+.clearfix:after{
+    content: " ";
+    display: block;
+    visibility: hidden;
+    height: 0px;
+    clear: both;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+
+
+.vmbox {
+    vertical-align: middle;
+}
+
+.txt-uppercase
+{
+	text-transform:uppercase;
+}
+
+
+.tl {
+    text-align: left!important;
+}
+
+.tr {
+    text-align: right!important;
+}
+
+.tc {
+    text-align: center!important;
+}
+
+.tj {
+    text-align: justify!important;
+}
+
+
+body{
+	background-color:#ccc;
+}
+
+.wrapper{
+	font-size:0px;
+	width:100%;
+	min-width:1170px;
+ 	margin:0 auto;
+}
+.container{
+	width:100%;
+	max-width:1170px;
+	margin:0 auto;
+}

@@ -1,0 +1,42 @@
+body{
+	background-color: #151922;
+}
+
+
+.demo-btn-group-grid~.demo-btn-group-grid{
+	margin-top: 20px;
+}
+
+.box{
+	background-color: #fff;
+	border:1px solid #006bff;
+	border-radius:6px;
+}
+.box~.box{
+	margin-top: 20px;
+}
+.box-title{
+	height: 20px;
+	background-color:#3f5040;
+	font-size:16px;
+	line-height: 20px;
+	margin:6px 0;
+	color:#987;
+}
+.box-body{
+	margin-top: 2px;
+	background-color: #345;
+}
+
+
+
+.btn-box,.form-box{
+	padding:20px;
+}
+
+.search-tips{
+	padding:10px;
+	background-color: #fff;
+	color:#333;
+	text-align: left;
+}

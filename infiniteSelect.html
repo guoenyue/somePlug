@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>无限下拉联动</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/ui.css">
+    <link rel="stylesheet" href="./css/demo.css">
+</head>
+
+<body>
+    <div class="select-box pa-form-control-group-grid" id="select-box">
+
+    </div>
+    <script>
+        // 约定：
+        // data结构为 {
+        //     name:"string",
+        //     count:number,
+        //     options: [{
+        //         name: "string",
+        //         count:number,
+        //         options:[{name:'string',count:number,options:[]}]
+        //     }, {
+        //         name: "string",
+        //         count:number,
+        //         options:['string']
+        //     }]
+        // }
+
+
+        var tmp = {
+            name: "选择器",
+            count: 1,
+            options: [{
+                name: "郭德纲",
+                count: 2,
+                options: [{
+                    name: '于思阳',
+                    count: 3,
+                    options: [{
+                        name: "随便啦1",
+                        count: 4,
+                        options: []
+                    }, {
+                        name: "随便啦2",
+                        count: 4,
+                        options: []
+                    }]
+                }, {
+                    name: '岳云鹏',
+                    count: 3,
+                    options: [{
+                        name: "随便啦3",
+                        count: 4,
+                        options: [{
+                            name: "随便啦5555",
+                            count: 5,
+                            options: []
+                        }, {
+                            name: "随便啦66666",
+                            count: 5,
+                            options: []
+                        }]
+                    }, {
+                        name: "随便啦4",
+                        count: 4,
+                        options: []
+                    }]
+                }]
+            }, {
+                name: "于谦",
+                count: 2,
+                options: [{
+                    name: '郭麒麟',
+                    count: 3,
+                    options: []
+                }]
+            }]
+        }
+
+
+        function mySelect() {
+            g("select-box").appendChild(renderSelect(tmp));
+            g("select-box").onclick = function(e) {
+                var ev = e || window.event;
+                var oTar = ev.target || ev.srcElement;
+                if (oTar.nodeName.toLowerCase() == "select") {
+                    oTar.onchange = function() {
+                        var nextSlectStr = this.selectedOptions[0].getAttribute("options");
+                        var nextSlectObj = nextSlectStr && JSON.parse(nextSlectStr);
+                        var tmp = null;
+                        var next = this.parentNode.parentNode;
+                        var oPar = this.parentNode.parentNode.parentNode;
+                        while (next.nextElementSibling) {
+                            oPar.removeChild(next.nextElementSibling);
+                        }
+                        renderSelect(nextSlectObj) && (tmp = document.createDocumentFragment(), tmp.appendChild(renderSelect(nextSlectObj)), g("select-box").appendChild(tmp), tmp = null);
+                    }
+                }
+            }
+        }
+        mySelect();
+
+        function renderSelect(data) {
+            var selectStr = '';
+            if (data && data.options.length < 1 || !data) return null;
+            var wrapper = document.createElement("div");
+            wrapper.className = "pa-form-control-wrapper pa-form-control-wrapper-select";
+            selectStr += `
+                <label>
+                    <select class="pa-form-control pa-form-control-select">
+                        ${renderOption(data.options)}
+                    </select>
+                    <div class="after-btn icon-toggle pa-btn"></div>
+                </label>
+            `;
+            wrapper.innerHTML = selectStr;
+            return wrapper;
+        }
+
+        function renderOption(data) {
+            var _data = data;
+            if (!_data) return '';
+            var optionStr = '<option value options>请选择</option>';
+            for (let i = 0, curItem; curitem = _data[i++];) {
+                optionStr += `
+                    <option value="${curitem.name}" options='${(curitem.options&&curitem.options.length>0)&&JSON.stringify(curitem)||""}'>${curitem.name}</option>
+                `;
+            };
+            return optionStr;
+        }
+
+        function g(id) {
+            return document.getElementById(id);
+        }
+    </script>
+</body>
+
+</html>
