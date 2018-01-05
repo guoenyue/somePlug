@@ -89,6 +89,7 @@
         //使用
         mySelect({
             container: g("select-box"),
+            data: tmp,
             changeCallback: function(e) {
                 console.log(this.value);
             }
@@ -100,8 +101,9 @@
             var _config = configs || {};
             var container = _config.container;
             if (!container) return false;
+            var data = _config.data;
             var cb = _config.changeCallback || function() {};
-            container.appendChild(renderSelect(tmp));
+            container.appendChild(renderSelect(data));
             container.onclick = function(e) {
                 var ev = e || window.event;
                 var oTar = ev.target || ev.srcElement;
