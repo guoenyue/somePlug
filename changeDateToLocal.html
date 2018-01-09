@@ -59,8 +59,8 @@
             parseTime: function(_time, tag) {
                 //此处的tag为后台格式，若为标准时间戳，此处为false
                 var timestamp;
-                _time = _time.replace("T", " ");
                 if (tag) {
+                    _time = _time.replace("T", " ");
                     var dateArr = this.changeTime(_time);
                     timestamp = new Date(dateArr[0], dateArr[1] - 1, dateArr[2], dateArr[3], dateArr[4], dateArr[5]).getTime();
                 } else {
