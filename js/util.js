@@ -175,5 +175,45 @@ function Json2HTML(json){
 	domStr+='<'+json.tagName+(json.className?(' class="'+json.className+'"'):'')+(json.id?(' id="'+json.id+'"'):'')+_data+(json.singleTag?'/>':('>'+subChildStr+'</'+json.tagName+'>'));
 	return domStr;
 }
-
-
+//取qs特定项目的值
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+//取cookie特定项目的值
+/*
+	所用到的核心正则与GetQueryString差不多，可以说在任何有规律的字符串中选某项的值
+	都可以通过修改这个正则表达式来实现目的。
+	另需要注意的是这个函数中有一个cookie的坑就是document.cookie取到的值会将每个分
+	号分割的项目插入一个空格，所以需要先去掉空格再去匹配，或者在匹配的时候将空格
+	算到匹配项目中。这里不推荐将空格加入匹配项目，使用了在匹配之前将空格滤掉。
+*/
+function getCookie(cookie){
+	var name=cookie;
+	if(!name)return "";
+	var cookies=trim(document.cookie,true);
+	var reg = new RegExp("(^|;)" + name + "=([^;]*)(;|$)");
+	var ret=cookies.match(reg);
+	if (ret != null) return unescape(ret[2]); return null;
+}
+function setCookie(cookieName,cookieCont,config){
+	var _config=config;
+	var exp='';
+	if(_config){
+		exp=";";
+		exp+="expires="+_config.time;
+		exp+="domain="+_config.domain;
+	}
+	document.cookie=cookieName+"="+cookieCont+exp;
+}
+/*
+	trim方法没什么好说，提一下第二个参数，参数含义是是否去掉所有的空格(两端及行内)
+*/
+function trim(str,all){
+	if(!str)return '';
+	var regBothEnds=/(^\s+|\s+&)/ig;
+	var regAll=/\s+/ig;
+	var reg=all&&regAll||regBothEnds;
+	return str.replace(reg,"");
+}
