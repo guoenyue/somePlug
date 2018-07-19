@@ -93,15 +93,17 @@
 	<div class="box" id="dateSel">
 		<div class="datebox">选择日期</div>
 		<div class="wrapper">
-			<div class="data-container">
-				<div class="data-select-item">2017-06-28</div>
-				<div class="data-select-item">2017-06-29</div>
-				<div class="data-select-item">2017-06-30</div>
-				<div class="data-select-item">2017-07-01</div>
+			<div class="data-container" id="dataDate">
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
+		var dateArr=["2017-06-26","2017-06-27","2017-06-28","2017-06-29","2017-06-30","2017-06-31"];
+		var dateStr='';
+		dateArr.forEach(function(item,i){
+			dateStr+='<div class="data-select-item">'+item+'</div>';
+		});
+		g("dataDate").innerHTML=dateStr;
 		g("dateSel").addEventListener("click",function(e){
 			e=e||window.event;
 			var oTar=e.target||e.srcElement;

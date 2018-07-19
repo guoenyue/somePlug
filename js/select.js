@@ -1,26 +1,28 @@
-function NumSelect(options){
-			options=options?options:{};
-			var defaultNum=options.num||0;
-			var that=this;
-			this.num=defaultNum;
-			this.desBtn=null;
-			this.addBtn=null;
-			this.panal=options.cont&&document.getElementById(options.cont)||document.body;
-			this.wrapper=null;
-			this.numcont=null;
-			this.numinput=null;
-			this.callback=options.callback||function(){};
-			this.init();
-		}
-NumSelect.prototype.init=function(){
-	var that=this;
-	var frag=document.createDocumentFragment();
-	var desBtn=document.createElement("span");
-	this.desBtn=desBtn;
-	this.desBtn.className="btn btn-des";
-	this.desBtn.onclick=function(e){
-		that.num--;
-		that.num=that.num<0?0:that.num;
+function NumSelect(options) {
+ 'use strict';
+ options = options || {};
+ var defaultNum = options.num || 0;
+ this.num = defaultNum;
+ this.desBtn = null;
+ this.addBtn = null;
+ this.panal = (options.cont && document.getElementById(options.cont)) || document.body;
+ this.wrapper = null;
+ this.numcont = null;
+ this.numinput = null;
+ this.callback = options.callback || function (){};
+ this.init();
+}
+
+NumSelect.prototype.init = function () {
+ 'use strict';
+ var that = this;
+ var frag = document.createDocumentFragment();
+ var desBtn = document.createElement("span");
+ this.desBtn = desBtn;
+ this.desBtn.className = "btn btn-des";
+ this.desBtn.onclick = function () {
+ 	that.num--;
+ 	that.num = that.num < 0 ? 0 : that.num;
 		that.setNum();
 		that.callback.apply(that,arguments);
 	};

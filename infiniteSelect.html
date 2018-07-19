@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/ui.css">
     <link rel="stylesheet" href="./css/demo.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
 </head>
 
 <body>
@@ -85,7 +86,7 @@
             }]
         }
 
-
+        var defalutSelectData=[{selector:"select1",val:"郭德纲"},{selector:"select2",val:"于思阳"}];
         //使用
         mySelect({
             container: g("select-box"),
@@ -94,8 +95,26 @@
                 console.log(this.value);
             }
         });
+        initVal(defalutSelectData);
+        function initVal(wrapperClass,data){
+            // data.forEach((item,index)=>{
+            //     var select=document.getElementsByName(item.selector)[0];
+            //     setVal(select,item.val);
+            //     triggerChangeEvent(select);
+            // });
+            //g("select-box")
+            data.forEach((item,index)=>{
+                $(wrapperClass).find("select").eq(index).val(item).triggerHandler("change");
+            });
+        }
 
+        function setVal(oTar,val){
+            oTar.value=val;
+        }
 
+        function triggerChangeEvent(oTar){
+            oTar.onchange();
+        }
 
         function mySelect(configs) {
             var _config = configs || {};
@@ -104,26 +123,32 @@
             var data = _config.data;
             var cb = _config.changeCallback || function() {};
             container.appendChild(renderSelect(data));
-            container.onclick = function(e) {
-                var ev = e || window.event;
-                var oTar = ev.target || ev.srcElement;
-                if (oTar.nodeName.toLowerCase() == "select") {
-                    oTar.onchange = function() {
-                        var nextSlectStr = this.selectedOptions[0].getAttribute("options");
-                        var nextSlectObj = nextSlectStr && JSON.parse(nextSlectStr);
-                        var tmp = null;
-                        var next = this.parentNode.parentNode;
-                        var oPar = this.parentNode.parentNode.parentNode;
-                        while (next.nextElementSibling) {
-                            oPar.removeChild(next.nextElementSibling);
-                        }
-                        renderSelect(nextSlectObj) && (tmp = document.createDocumentFragment(), tmp.appendChild(renderSelect(nextSlectObj)), container.appendChild(tmp), tmp = null);
-                        typeof cb == "function" && cb.call(this, this);
-                    }
-                }
-            }
+            // container.onclick = function(e) {
+            //     var ev = e || window.event;
+            //     var oTar = ev.target || ev.srcElement;
+            //     if (oTar.nodeName.toLowerCase() == "select") {
+            //         //addChangeEvent(oTar,container);
+            //     }
+            // }
+            var select=container.children[0].children[0].children[0];
+            addChangeEvent(select,container);
         }
 
+        function addChangeEvent(oTar,contWrapper){
+            oTar.onchange = function() {
+                var nextSlectStr = this.selectedOptions[0].getAttribute("options");
+                var nextSlectObj = nextSlectStr && JSON.parse(nextSlectStr);
+                var tmp = null;
+                var next = this.parentNode.parentNode;
+                var oPar = this.parentNode.parentNode.parentNode;
+                while (next.nextElementSibling) {
+                    oPar.removeChild(next.nextElementSibling);
+                }
+                var newSelectDom=renderSelect(nextSlectObj);
+                 newSelectDom&& (tmp = document.createDocumentFragment(), tmp.appendChild(newSelectDom), contWrapper.appendChild(tmp),console.log(newSelectDom.children[0]),addChangeEvent(newSelectDom.children[0].children[0],contWrapper), tmp = null);
+                typeof cb == "function" && cb.call(this, this);
+            }
+        }
         function renderSelect(data) {
             var selectStr = '';
             if (data && data.options.length < 1 || !data) return null;
@@ -156,6 +181,7 @@
         function g(id) {
             return document.getElementById(id);
         }
+        
     </script>
 </body>
 
