@@ -221,5 +221,5 @@ function trim(str,all){
 function replaceTag(str,newTag,oldTag){
 	var reg_all=new RegExp("<("+oldTag+"\\w*| [^"+oldTag+"]\\w*)(.*?)>(.*?)</\\1>","ig");
 	str=str.replace(reg_all,"【TagStart】$2【TagEnd】$3【End】");
-	return str.replace("【TagStart】","<"+newTag).replace("【TagEnd】",">").replace("【End】","</"+newTag+">");
+	return str.replace(/【TagStart】/g,"<"+newTag).replace(/【TagEnd】/g,">").replace(/【End】/g,"</"+newTag+">");
 }
