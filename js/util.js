@@ -217,9 +217,55 @@ function trim(str,all){
 	var reg=all&&regAll||regBothEnds;
 	return str.replace(reg,"");
 }
-
+/* 替换双标记标签 */
 function replaceTag(str,newTag,oldTag){
 	var reg_all=new RegExp("<("+oldTag+"\\w*| [^"+oldTag+"]\\w*)(.*?)>(.*?)</\\1>","ig");
 	str=str.replace(reg_all,"【TagStart】$2【TagEnd】$3【End】");
 	return str.replace(/【TagStart】/g,"<"+newTag).replace(/【TagEnd】/g,">").replace(/【End】/g,"</"+newTag+">");
+}
+/* 检测数组包含 */
+function contains(arr1,arr2){
+	if(!isArray(arr1)||!isArray(arr2)){try{return false;}catch(e){throw new Error("两个都必须是数组")}}
+	var tmp1=arr1,tmp2=arr2;
+	return arr1.some(item=>arr2.indexOf(item)>-1);
+}
+function isArray(arr){
+	return arr instanceof Array;
+}
+/* 归并排序 */
+function mergeSort(arr){
+    return mergeSortRec(arr);
+}
+function mergeSortRec(arr){
+    var len=arr.length;
+    if(len==1)return arr;
+    var cen=parseInt(arr.length/2);
+    var leftArr=arr.slice(0,cen);
+    var rightArr=arr.slice(cen);
+	return mergeArr(mergeSortRec(leftArr),mergeSortRec(rightArr));
+	/* 这边的归并是递归函数不要忘记处理 */
+}
+function mergeArr(arr1,arr2){
+	var ia=0,ib=0,result=[];
+	/* 第一个while循环是核心内容 */
+    while(ia<arr1.length&&ib<arr2.length){
+        switch(true){
+            case arr1[ia]<arr2[ib]:
+                result[result.length]=arr1[ia++];
+            break;
+            case arr1[ia]>arr2[ib]:
+            default:
+                result[result.length]=arr2[ib++];
+            break;
+        }
+    };
+    while(ia<arr1.length){
+		result[result.length]=arr1[ia++];
+		/* 此处的指针记得递增不要忘记 */
+    }
+    while(ib<arr2.length){
+		result[result.length]=arr2[ib++];
+		/* 此处的指针记得递增不要忘记 */
+    }
+    return result;
 }
