@@ -269,3 +269,17 @@ function mergeArr(arr1,arr2){
     }
     return result;
 }
+
+/* 操作数字，每三位加逗号 */
+
+function parseNumber(number){
+	var str=''+number;
+	str=str.split(".");
+	var left=str[0];
+	var right=str[1];
+	var regexp=/(\d+)(\d{3})/g;
+	while(regexp.test(left)){
+		left=left.replace(regexp,"$1,$2");
+	}
+	return left+(right&&("."+right.replace(/(\d{3})(?=[^$])/g,"$1,"))||'');
+}
