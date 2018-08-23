@@ -283,3 +283,14 @@ function parseNumber(number){
 	}
 	return left+(right&&("."+right.replace(/(\d{3})(?=[^$])/g,"$1,"))||'');
 }
+
+/* 正则反向选择（排除） */
+
+//不包含word的字符串
+var eliminateWord=/^((?!word).)$/i
+
+/*
+	在js的正则表达式中使用(?!text)来表示不匹配text的字符串，
+	使用[^abcd]来表示不包含"a","b","c","d"单词的字符串
+	而(a|b|c)则用来表示包含"a","b","c"的字符串
+*/
